@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Game</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Математична Гра</h1>
+        <div id="game">
+            <div id="settings" style="display: none;">
+                <h2>Налаштування</h2>
+                <label>
+                    Приклади множення:
+                    <input type="number" id="multiplicationCount" min="0" value="35">
+                </label>
+                <label>
+                    Приклади ділення:
+                    <input type="number" id="divisionCount" min="0" value="50">
+                </label>
+                <label>
+                    Приклади додавання:
+                    <input type="number" id="additionCount" min="0" value="5">
+                </label>
+                <label>
+                    Приклади віднімання:
+                    <input type="number" id="subtractionCount" min="0" value="10">
+                </label>
+                <br>
+                <p id="error-message" style="color: red; display: none;">Введіть коректний відсоток генерації (сума всії відсотків має дорівнювати 100%)</p>
+                <button class="button" id="backToGame" onclick="toggleSettings()">Повернутися до гри</button>
+                <button class="button" id="resetSettings" onclick="resetSettings()">Скинути налаштування</button>
+                <button class="button" id="saveSettings" onclick="saveSettings()" style="display: none;">Зберегти налаштування</button>
+                <button class="button" id="discardChanges" onclick="discardChanges()" style="display: none;">Відхилити</button>
+            </div>
+            <div id="block1">
+                <p>Скільки прикладів ви хочете розв'язати?</p>
+                <input type="number" id="numExamples" min="1" max="100" value="20">
+                <button class="button" onclick="startGame()">Почати</button>
+                <button class="button" onclick="toggleSettings()">Налаштування</button>
+            </div>
+            <div id="block2" style="display: none;">
+                <div id="timer">Час: 0 сек</div>
+                <p class="question" id="question"></p>
+                <input type="number" id="answer" onkeydown="if(event.key === 'Enter') submitAnswer()">
+                <button class="button" onclick="submitAnswer()">Відправити</button>
+            </div>
+            <div id="result" class="result" style="display: none;"></div>
+            <div id="stats" class="stats" style="display: none;"></div>
+            <div id="actions" style="display: none;">
+                <button class="button" onclick="retryTest()">Пройти тест ще раз</button>
+                <button class="button" onclick="retryMistakes()">Робота над помилками</button>
+            </div>
+        </div>
+    </div>
+    <script src="game.js"></script>
+</body>
+</html>
