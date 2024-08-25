@@ -10,6 +10,7 @@
     <div class="container">
         <h1>Математична Гра</h1>
         <div id="game">
+            <!-- Меню налаштувань -->
             <div id="settings" style="display: none;">
                 <h2>Налаштування</h2>
                 <label>
@@ -35,12 +36,16 @@
                 <button class="button" id="saveSettings" onclick="saveSettings()" style="display: none;">Зберегти налаштування</button>
                 <button class="button" id="discardChanges" onclick="discardChanges()" style="display: none;">Відхилити</button>
             </div>
+
+            <!-- Початковий блок -->
             <div id="block1">
                 <p>Скільки прикладів ви хочете розв'язати?</p>
                 <input type="number" id="numExamples" min="1" max="100" value="20">
                 <button class="button" onclick="startGame()">Почати</button>
                 <button class="button" onclick="toggleSettings()">Налаштування</button>
+                <button class="button" onclick="toggleTableMenu()">Таблиця</button>
             </div>
+            <!-- Блок гри -->
             <div id="block2" style="display: none;">
                 <div id="timer">Час: 0 сек</div>
                 <p class="question" id="question"></p>
@@ -52,6 +57,24 @@
             <div id="actions" style="display: none;">
                 <button class="button" onclick="retryTest()">Пройти тест ще раз</button>
                 <button class="button" onclick="retryMistakes()">Робота над помилками</button>
+            </div>
+            <!-- Меню таблиць -->
+            <div id="tableMenu" style="display: none;">
+                <h2>Генерація таблиці</h2>
+                <label>
+                    Виберіть тип таблиці:
+                    <select id="tableType">
+                        <option value="multiplication">Множення</option>
+                        <option value="division">Ділення</option>
+                    </select>
+                </label>
+                <label>
+                    Введіть число:
+                    <input type="number" id="tableNumber" min="1" max="200">
+                </label>
+                <button class="button" onclick="generateTable()">Генерувати таблицю</button>
+                <div id="tableResult" class="table-result"></div>
+                <button class="button" onclick="goBackToMain()">Повернутися до гри</button>
             </div>
         </div>
     </div>

@@ -47,16 +47,14 @@ function generateExamples(count) {
 
 // Генерація прикладу ділення
 function generateDivisionExample() {
-    const divisors = [8, 12, 14, 16]; // Можливі дільники
-    let b = divisors[Math.floor(Math.random() * divisors.length)]; // Випадковий вибір дільника
-    let quotient = Math.floor(Math.random() * (200 / b)) + 5; // Випадкове обчислення частки
-    let a = b * quotient; // Обчислення діленого
-
-    // Перевірка на те, чи знаходиться ділене в межах 40-200
-    while (a < 40 || a > 200) {
-        quotient = Math.floor(Math.random() * (200 / b)) + 5;
-        a = b * quotient;
-    }
+    const divisors = [4, 5, 6, 7, 8, 9, 11, 12]; // Можливі дільники
+    let a, b, quotient;
+	do {
+	b = divisors[Math.floor(Math.random() * divisors.length)]; // Випадковий вибір дільника
+    quotient = Math.floor(Math.random() * (200 / b)) + 5; // Випадкове обчислення частки
+    a = b * quotient; // Обчислення діленого
+    // Перевірка на те, чи знаходиться ділене в межах 20-150
+    }	while (a < 20 || a > 150);
 
     let question = `${a} / ${b} = `; // Формулювання питання
     let answer = a / b; // Обчислення правильної відповіді
@@ -65,10 +63,13 @@ function generateDivisionExample() {
 
 // Генерація прикладу множення
 function generateMultiplicationExample() {
-    let a = Math.floor(Math.random() * 64) + 3; // Випадковий множник
-    let b = Math.floor(Math.random() * (200 / a)) + 3; // Випадковий множник
-    let question = `${a} * ${b} = `; // Формулювання питання
-    let answer = a * b; // Обчислення правильної відповіді
+    let a, b, answer;
+    do {
+        a = Math.floor(Math.random() * 48) + 3; // Множник a від 3 до 50
+        b = Math.floor(Math.random() * (150 / a)) + 3; // Множник b
+        answer = a * b;
+    } while (answer > 150); // Повторити, якщо добуток більший за 200
+    let question = `${a} * ${b} = `;
     return { question, answer, userAnswer: null, isCorrect: false };
 }
 
@@ -262,3 +263,52 @@ document.querySelectorAll('#multiplicationCount, #divisionCount, #additionCount,
         document.getElementById("discardChanges").style.display = "block"; // Показ кнопки "Відхилити"
     });
 });
+
+// Перемикання на меню таблиць
+function toggleTableMenu() {
+    document.getElementById("block1").style.display = "none";
+    document.getElementById("tableMenu").style.display = "block";
+}
+
+// Повернення на головне меню
+function goBackToMain() {
+    document.getElementById("tableMenu").style.display = "none";
+    document.getElementById("block1").style.display = "block";
+}
+
+// Генерація таблиці множення або ділення
+function generateTable() {
+    const tableType = document.getElementById("tableType").value;
+    const number = parseInt(document.getElementById("tableNumber").value);
+    let tableHTML = '';
+
+    if (isNaN(number) || number <= 0 || number >= 170) {
+        tableHTML = '<p style="color: red;">Введіть коректне число (від 1 до 170).</p>';
+    } else {
+        if (tableType === 'multiplication') {
+            tableHTML = generateMultiplicationTable(number);
+        } else if (tableType === 'division') {
+            tableHTML = generateDivisionTable(number);
+        }
+    }
+
+    document.getElementById("tableResult").innerHTML = tableHTML;
+}
+
+// Генерація таблиці множення
+function generateMultiplicationTable(number) {
+    let table = '';
+    for (let i = 1; i * number < 170; i++) {
+        table += `<p>${i} * ${number} = ${i * number}</p>`;
+    }
+    return table;
+}
+
+// Генерація таблиці ділення
+function generateDivisionTable(divisor) {
+    let table = '';
+    for (let i = 1; i * divisor < 170; i++) {
+        table += `<p>${i * divisor} / ${divisor} = ${i}</p>`;
+    }
+    return table;
+}
